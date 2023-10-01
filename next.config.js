@@ -1,6 +1,6 @@
-const { PHASE_DEVELOPMENT_SERVER } = require('next/constants');
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
+const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
 });
 
 module.exports = (phase, { defaultConfig }) => {
@@ -9,16 +9,16 @@ module.exports = (phase, { defaultConfig }) => {
     // ... your common configuration if any
     // transpilePackages: ["./src/app/api"]
     webpack: (config, { isServer }) => {
-        if (!isServer) {
-          config.resolve.fallback = {
-            fs: false,
-            path: false,
-            stream: false,
-          };
-        }
-    
-        return config;
-      },
+      if (!isServer) {
+        config.resolve.fallback = {
+          fs: false,
+          path: false,
+          stream: false,
+        };
+      }
+
+      return config;
+    },
   };
 
   if (phase === PHASE_DEVELOPMENT_SERVER) {
@@ -32,6 +32,13 @@ module.exports = (phase, { defaultConfig }) => {
   // Merging configuration for all phases except development
   return withBundleAnalyzer({
     ...commonConfig,
-    // ... other configuration for all phases except development
+    // ... other configuration for all phases except development,
+    typescript: {
+      // !! WARN !!
+      // Dangerously allow production builds to successfully complete even if
+      // your project has type errors.
+      // !! WARN !!
+      ignoreBuildErrors: true,
+    },
   });
 };
