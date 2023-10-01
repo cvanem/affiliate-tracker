@@ -1,6 +1,6 @@
 {
   "name": "affiliate-tracker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This project sets-up an API that parses the query-parameters when invoked via a user clicking on a link",
   "scripts": {
     "prebuild": "env-cmd -f .env kysely-codegen --exclude-pattern spatial_ref_sys",
